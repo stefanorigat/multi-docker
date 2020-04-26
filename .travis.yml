@@ -14,10 +14,11 @@ after_success:
     - docker build -t stefanorigat/multi-server ./server
     - docker build -t stefanorigat/multi-worker ./worker
 
-#Log in to the Docker CLI (not interactive)
-- echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
-#Take all images and push them to Docker Hub
-- docker push stefanorigat/multi-client
-- docker push stefanorigat/multi-nginx
-- docker push stefanorigat/multi-server
-- docker push stefanorigat/multi-worker
+    #Log in to the Docker CLI (not interactive)
+    - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+    
+    #Take all images and push them to Docker Hub
+    - docker push stefanorigat/multi-client
+    - docker push stefanorigat/multi-nginx
+    - docker push stefanorigat/multi-server
+    - docker push stefanorigat/multi-worker
