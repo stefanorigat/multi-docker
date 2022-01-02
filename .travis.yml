@@ -6,7 +6,7 @@ beofre_install:
   - docker build -t stefanorigat/react-test -f ./client/Dockerfile.dev ./client
 
 script:
-  - docker run stefanorigat/react-test npm test -- --coverage
+  - docker run -e CI=true stefanorigat/react-test npm test
 
 after_success:
   - docker build -t stefanorigat/multi-client ./client
