@@ -1,0 +1,27 @@
+sudo: required
+services:
+  - docker
+
+beofre_install:
+  - docker build -t stefanorigat/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run stefanorigat/react-test npm test -- --coverage
+
+after_success:
+  - docker build -t stefanorigat/multi-client ./client
+  - docker build -t stefanorigat/multi-nginx ./nginx
+  - docker build -t stefanorigat/multi-server ./server
+  - docker build -t stefanorigat/multi-worker ./worker
+
+# Login to the Docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+
+# Take those images and push them to Docker Hub
+  - docker push stefanorigat/multi-client
+  - docker push stefanorigat/multi-nginx
+  - docker push stefanorigat/multi-server
+  - docker push stefanorigat/multi-worker
+
+
+
